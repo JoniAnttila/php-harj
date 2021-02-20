@@ -1,23 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import {useState,useEffect} from 'react';
+
+const URL = 'http://localhost/PHP/index.php'
 
 function App() {
+  const [message, setMessage] = useState('Initial value in React app.');
+  
+  useEffect(() => {
+    fetch(URL)
+    .then(res => res.text())
+    .then(
+      (res) => {
+        setMessage(res);
+      }, (error) => {
+        alert(error)
+      }
+    )
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h3>Test PHP backend</h3>
+      <p>{message}</p>
     </div>
   );
 }
